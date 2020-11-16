@@ -1,0 +1,12 @@
+#map{
+    width: max-content;
+    margin: 0 auto;
+}
+@font-face {
+    font-family: 'Dreamer';
+    src: URL('/static/fonts/TheDreamer-EZ1e.otf') format('truetype');
+}
+p {
+    /* font-family: 'Dreamer' */
+    font-family: 'Lucida'
+}

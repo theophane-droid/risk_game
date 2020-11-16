@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=auto, initial-scale=1.0">
+    <title>Smaug Dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <script type="text/javascript"src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/navbar.css')}}">
+    <script type="text/javascript"src="{{url_for('static', filename='js/navbar.js')}}"></script>
+    <script type="text/javascript"src="{{url_for('static', filename='js/add.js')}}"></script>
+    <script type="text/javascript"src="{{url_for('static', filename='js/reload.js')}}"></script>
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}">
+
+
+</head>
+<body>
+    <navbar>
+        <div class="navbar nav navbar-fixed-top navbar-inverse">
+          <div class="container-fluid">
+            <div class="v-flex">
+              <div class="navbar-body">
+                <div class="navbar-start">
+                  <div class="hamburger-menu">
+                    <div class="ic_menu">
+                                  <span></span>
+                                  <span></span>
+                                  <span></span>
+                              </div>
+                  </div>
+                  <img class="logo" src="{{url_for('static', filename='img/logo.png')}}">
+                  <p id="logo_title">maug</p>
+                </div>
+                <div class="search">
+                  <input type="text" class="search-textbox" placeholder="Search">
+                  <a class="ico-btn search-btn"><i class="material-icons ic_search">&#xE8B6;</i></a>
+                  <a class="ico-btn clear-btn"><i class="material-icons ic_clear">&#xE14C;</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar navbar-fixed-top navbar-inverse tabs paper-shadow-bottom-z-2">
+          <div class="container-fluid">
+            <ul class="navbar-body list-inline">
+              <li><a href='/' style="color:black"; text-decoration: none>Home</a></li>
+              <li><a href='/add' style="color:black"; text-decoration: none>Add new source</a></li>
+              <li><a href='/add' style="color:black"; text-decoration: none>Log</a></li>
+            </ul>
+            <div class="tab-highlighter"></div>
+          </div>
+        </div>
+      </navbar>
+    <center>
+        <h1>
+            {% block title %}
+            {% endblock %}
+        </h1>
+    </center>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=auto, initial-scale=1.0">
+    <title>Guerres Napoléoniennes</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/map.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/game.css')}}">
+    <link rel="icon" href="/static/img/logo.png">
+    <script type="text/javascript"src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-expand-lg navbar-dark bg-dark">
+        <img src='/static/img/logo.png' style="width: 40px">
+        <a class="navbar-brand" href="/" style="padding-left: 30px">NapoWar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">A propos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Règles
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">règles de NapoWar</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">règles officielles</a>
+              </div>
+            </li>
+          </ul>
+          {% if not logged %}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Se connecter</button>
+          {% else %}
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Se déconnecter</button>
+          {% endif %}
+        </div>
+      </nav>
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

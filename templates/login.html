@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <center>
+        <h1>Bonjour fier général, veuillez vous authentifier</h1>
+        <p>Vous avez dû recevoir vos identifiants par email</p>
+        <form action='/' method='post' class='form-group'>
+            <label>Nom de votre faction:</label><br>
+            <input type='text' name='name' class='form-group'><br><br>
+            <label>Mot de passe</label><br>
+            <input type='password' name='pass' class='form-group'><br>
+            <input type='submit' value='Chaaarger !' class='form-group'>
+        </form>
+    </center>
+{% endblock %}

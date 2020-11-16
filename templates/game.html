@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<center>
+    <p style="margin: 20px"> Bonjour général {{team.prefix}}{{ team.name }}, il vous reste {{team.nb_soldats_rsv}} unités à déployer</p>
+    <main style='display: inline-flex'>
+        <div id='infos'>
+            <p><span id='i_name'>Jour:</span> {{game.day}}</p>
+            <p><span id='i_name'>Tour:</span> {{game.order[game.num_player]}}</p>
+            {% if team.name==game.order[game.num_player] %}
+                <p><span id='i_name'>Temps restant:</span> {{game.get_remaining_time(team)[0]}}h{{game.get_remaining_time(team)[1]}}m</p>
+            {% else %}
+                <p><span id='i_name'>Prochain tour:</span> {{game.get_remaining_time(team)[0]}}h{{game.get_remaining_time(team)[1]}}m</p>
+            {% endif %}
+        </div>
+        <iframe id="board"
+            title="board"
+            width="1205px"
+            height="665px"
+            src="/board">
+        </iframe>
+        <div id='pions'></div>
+    </main>
+    {% if not team.repartition_made %}
+        <p>Vous pouvez encore répartir vos troupes, Click gauche pour saisir vos soldats, Click droit pour les déposer</p>
+        {% if not game.day==1 %}
+            <button type="button" class="btn btn-primary">Finir la répartition</button>
+        {% else %}
+            <p>Vous ne pouvez pas encore attaquer car c'est le premier jour de bataille</p>
+        {% endif %}
+    {% endif %}
+</center>
+<input type='hidden' id='can_play' value={{game.can_play(team)}}>
+{% endblock %}

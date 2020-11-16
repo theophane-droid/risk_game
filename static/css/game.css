@@ -1,0 +1,10 @@
+#infos{
+    border: solid 1px black;
+    padding: 10px;
+    border-radius: 5px;
+    height: max-content;
+    margin: auto 30px;
+}
+#i_name{
+    font-weight: bold;
+}
