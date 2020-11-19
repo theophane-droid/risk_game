@@ -10,7 +10,7 @@ class Team:
         self.repartition_made = data['repartition_made'] if 'repartition_made' in data else False
     
     def __str__(self):
-        return 'color: {}; nb_soldats_rsv: {}'.format(self.color, self.nb_soldats_rsv)
+        return 'name: {}; nb_soldats_rsv: {}'.format(self.name, self.nb_soldats_rsv)
 
     def encode(self):
         return {

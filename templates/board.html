@@ -1,4 +1,8 @@
-<script type="text/javascript" src="{{url_for('static', filename='js/board.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+<script type="text/javascript" src="{{url_for('static', filename='js/repart.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/attack.js')}}"></script>
+
+
 <div id='map'>
     <img id='territoryA' src='/static/img/A.png' style='left:0px; top:0px; width:1200px; height:660px; opacity:1; position:absolute'>
     <img class='territory' id='territory0' src='/static/img/0.png' style='left:0px; top:0px; width:1200px; height:660px; opacity:1.0; position:absolute'>
@@ -45,10 +49,33 @@
     <img class='territory' id='territory41' src='/static/img/41.png' style='left:0px; top:0px; width:1200px; height:660px; opacity:1.0; position:absolute'>
     {% for png_name, tab in coords.items() %}
         {% for coord in tab %}
-            {% for i in range(0,coord[2]) %}
-                <img class='pion {{coord[4]}} {{coord[3]}}' oncontextmenu="pop('{{coord[3]}}');return false;" id='{{i}}' {% if game.can_play(team) %} onclick='pick("{{coord[3]}}")' {% endif %} onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
-            {% endfor %}
+            {% if game.can_play(team) %}
+                {% if not team.repartition_made %}
+                    {% for i in range(0,coord[2]) %}
+                        <img class='pion {{coord[4]}} {{coord[3]}}' oncontextmenu="pop('{{coord[3]}}');return false;" id='{{i}}' onclick='pick("{{coord[3]}}")' onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
+                    {% endfor %}
+                {% else %}
+                    {% for i in range(0,coord[2]) %}
+                        <img class='pion {{coord[4]}} {{coord[3]}}' id='{{i}}' onclick='("{{coord[3]}}")' onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
+                     {% endfor %}
+                {% endif %}
+            {% else %}
+                {% for i in range(0,coord[2]) %}
+                    <img class='pion {{coord[4]}} {{coord[3]}}' id='{{i}}' onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
     {% endfor %}
 </div>
+team : {{team}}
 <input type="hidden" id="team_name" value="{{team.name}}">
+<input type="hidden" id="can_play" value="{{game.can_play(team)}}">
+<input type="hidden" id="can_attack" vale="{{False}}">
+
+<center>
+    <div style="margin-top: 680px">
+        {% if game.can_play(team) and not team.repartition_made %}
+        <button onclick="validate_repart()" type="button" >Finir la répartition</button>
+        {% endif %}
+    </div>
+</center>

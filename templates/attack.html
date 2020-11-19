@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/attack.css')}}">
+<script type="text/javascript" src="{{url_for('static', filename='js/attack.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/dice/d6.js')}}"></script>
+
+<main>
+    <h1>Bataille pour {{ter2.name}}</h1>
+    <div id='battle'>
+        <div class="line">
+            <div id='team1'>
+                <input type="hidden" id='nb1' value="{{ter1.nb-1}}"> 
+                <input type="hidden" id='ter1' value="{{ter1.name}}">
+                <input type="hidden" id='t1' value="{{team1.name}}"> 
+                <div class='center'>
+                    <img class='center' src="/static/img/{{team1.pion}}" id="pion">
+                    <p class='team_name center'>{{team1.name}}</p>
+                </div>
+                <div class='infos'>
+                    <p><span class="i_name">Nombre de pions restants : </span><span id='w_nb1'>{{ter1.nb-1}}</span></p>
+                </div>
+                <div id="dices1"></div>
+            </div>
+            <div id='team2'>
+                <input type="hidden" id='nb2' value="{{ter2.nb}}"> 
+                <input type="hidden" id='ter2' value="{{ter2.name}}"> 
+                <input type="hidden" id='t2' value="{{team2.name}}"> 
+                <div class='center'>
+                    <img class='center' src="/static/img/{{team2.pion}}" id="pion">
+                    <p class='team_name center'>{{team2.name}}</p>
+                </div>
+                <div class='infos'>
+                    <p><span class="i_name">Nombre de pions restants : </span><span id='w_nb2'>{{ter2.nb}}</span></p>
+                </div>
+                <div id="dices2"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<center>
+    <button class="btn btn-primary center" onclick="attack()">Attaquer !</button>
+</center>

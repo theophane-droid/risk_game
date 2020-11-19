@@ -16,19 +16,17 @@
         <iframe id="board"
             title="board"
             width="1205px"
-            height="665px"
+            height="750"
             src="/board">
         </iframe>
         <div id='pions'></div>
     </main>
-    {% if not team.repartition_made %}
+    {% if game.can_play(team) and not team.repartition_made %}
         <p>Vous pouvez encore répartir vos troupes, Click gauche pour saisir vos soldats, Click droit pour les déposer</p>
-        {% if not game.day==1 %}
-            <button type="button" class="btn btn-primary">Finir la répartition</button>
-        {% else %}
-            <p>Vous ne pouvez pas encore attaquer car c'est le premier jour de bataille</p>
-        {% endif %}
+        <p>Une fois fini, clickez sur "Finir la répartition"</p>
+        <p>Clickez sur un des vos territoire puis sur un ennemi pour l'attaquer</p>
     {% endif %}
 </center>
+{{ team }}
 <input type='hidden' id='can_play' value={{game.can_play(team)}}>
 {% endblock %}

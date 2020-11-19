@@ -1,0 +1,35 @@
+main{
+    width: max-content;
+    height: max-content; 
+    margin: 50px auto;
+}
+.center{
+    width: max-content;
+    margin: 0 auto;
+}
+.line{
+    display: inline-flex;
+}
+#pion{
+    width: 100px;
+}
+#battle{
+    width: max-content;
+    margin: 40px auto;
+}
+.team_name{
+    font-size: 20px;
+    font-weight: bold;
+}
+.infos{
+    padding: 30px;
+    border: solid 1px black;
+    margin: 20px;
+    border-radius: 10px;
+}
+.i_name{
+    font-weight: bold;
+}
+#dices1, #dices2{
+    margin: 10px;
+}

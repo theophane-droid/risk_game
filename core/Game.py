@@ -61,7 +61,7 @@ class Game(JSONEncoder):
             end = datetime.fromtimestamp(self.end_frame) + timedelta(hours=MAX_PLAY_TIME)
             self.end_frame = end.timestamp()
             self.num_player+=1
-            while self.num_player>len(self.teams):
+            while self.num_player>=len(self.teams):
                 self.day+=1
                 self.num_player%=len(self.teams) 
 
@@ -92,13 +92,17 @@ class Game(JSONEncoder):
         return i
 
     def can_play(self, team):
+        print('team : "' + team.name + '"')
+        print(self.order)
+        print(self.num_player)
+        print(team.name == self.order[self.num_player])
         return team.name == self.order[self.num_player]
 
     def get_remaining_time(self, team):
         hop = self.calc_hop(team)
         hours = 0
         if hop!=0:
-            hours = hop * MAX_PLAY_TIME
+            hours = (hop-1) * MAX_PLAY_TIME
         diff = datetime.fromtimestamp(self.end_frame) - datetime.now()
         hours += int(diff.days*24 + diff.seconds//3600)
         minutes = (diff.seconds//60)%60
