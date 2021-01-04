@@ -1,4 +1,6 @@
 var pickNumber = 0;
+var lastposx;
+var lastposy;
 function can_play(){
     console.log(document.getElementById('can_play').value);
     return document.getElementById('can_play').value == 'True';
@@ -25,13 +27,14 @@ function isClass(el, className){
     return false;
 }
 function updateNumber(className, delta){
-    var liste = document.getElementsByClassName(className);
-    var nb = liste.length;
-    for(var i=0; i<nb; i++){
-        posx = liste[i].style.left;
-        posy = liste[i].style.top;
-        liste[i].onmouseover=print_number(posx,posy,(nb+delta));
-    }
+    // ! TODO: change ça
+    // var liste = document.getElementsByClassName(className);
+    // var nb = liste.length;
+    // for(var i=0; i<nb; i++){
+    //     posx = liste[i].style.left;
+    //     posy = liste[i].style.top;
+    //     liste[i].onmouseover=print_number(posx,posy,(nb+delta));
+    // }
 }
 
 
@@ -42,7 +45,7 @@ function pick(class_name){
     }
     var liste = document.getElementsByClassName(class_name);
     var playing_team = document.getElementById('team_name').value;
-    var top = getElMax(liste);
+    var top = liste[liste.length-1]; // ! TODO check that
     if(!isClass(top, playing_team)){
         alert('Ce ne sont pas vos pions');
     }
@@ -51,7 +54,7 @@ function pick(class_name){
     }
     else{
         top.parentNode.removeChild(top);
-        updateNumber(top.classList[top.classList.length-1], -1);
+        //updateNumber(top.classList[top.classList.length-1], -1);
         top.style.position ='absolute';
         top.style.top = (50 +pickNumber*5) + 'px';
         top.style.left = '1100px';
@@ -82,7 +85,9 @@ function pop(territoryName){
             toPick.parentNode.removeChild(toPick);
             toPick.className = "pion " + playing_team + " " + territoryName;
             toPick.style.left = top.style.left;
-            toPick.style.top = parseInt(top.style.top) - 2 + 'px';
+            console.log("top top: " + top.style.top)
+            toPick.style.top = parseFloat(top.style.top) - 2 + 'px';
+            console.log("toPick top: " + toPick.style.top)
             toPick.setAttribute('onclick','pick("'+territoryName+'")');
             toPick.setAttribute('oncontextmenu','pop("'+territoryName+'"); return false;');
             toPick.setAttribute('onmouseover', top.onmouseover);
@@ -96,22 +101,29 @@ function pop(territoryName){
 }
 
 function removeElement(elementId) {
-    var element = document.getElementById(elementId);
-    while (element!=null){
-        element.parentNode.removeChild(element);
-        var element = document.getElementById(elementId);
+    // var element = document.getElementById(elementId);
+    // while (element!=null){
+    //     element.parentNode.removeChild(element);
+    //     var element = document.getElementById(elementId);
 
-    }
+    // }
 }
 function print_number(posx, posy, territoryName){
-    var map = document.getElementById('map');
-    var nb = document.getElementsByClassName(territoryName).length;
-    removeElement('text');
-    var str = "<p id='text' style='position: absolute; left:"+ (parseInt(posx)+10) + "px;";
-    str += " top:"+posy+"px; ";
-    str+= "background: white; border-radius: 50%; border: solid 1px black; padding: 1px;"
-    str += "'>" + nb + "</p>";
-    map.innerHTML += str;
+    // ! TODO: finish print_number
+    // if (posx == lastposx && posy == lastposy){
+    //     console.log('end');
+    //     return;
+    // }
+    // var map = document.getElementById('map');
+    // var nb = document.getElementsByClassName(territoryName).length;
+    // removeElement('text');
+    // var str = "<p id='text' style='position: absolute; left:"+ (parseInt(posx)+10) + "px;";
+    // str += " top:"+posy+"px; ";
+    // str+= "background: white; border-radius: 50%; border: solid 1px black; padding: 1px;"
+    // str += "'>" + nb + "</p>";
+    // map.innerHTML += str;
+    // lastposx = posx;
+    // lastposy = posy;
 }
 function getTerritoryName(el){
     var chaine = "";
