@@ -33,3 +33,10 @@ main{
 #dices1, #dices2{
     margin: 10px;
 }
+.link{
+    color: white;
+}
+.link:hover{
+    text-decoration: none;
+    color: white;
+}

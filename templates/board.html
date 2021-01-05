@@ -1,3 +1,5 @@
+{% include "parchment.html" %}
+
 <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
 <script type="text/javascript" src="{{url_for('static', filename='js/repart.js')}}"></script>
 <script type="text/javascript" src="{{url_for('static', filename='js/attack.js')}}"></script>
@@ -56,7 +58,7 @@
                     {% endfor %}
                 {% else %}
                     {% for i in range(0,coord[2]) %}
-                        <img class='pion {{coord[4]}} {{coord[3]}}' id='{{i}}' onclick='pick("{{coord[3]}}")' onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
+                        <img class='pion {{coord[4]}} {{coord[3]}}' id='{{i}}' onclick='selectCountry("{{coord[3]}}")' onmouseout="removeElement('text')" onmouseover="print_number({{coord[0]}}, {{coord[1]}}, '{{coord[3]}}')" src='static/img/{{png_name}}' style='width: 20px; height: 20px; left:{{coord[0]-10}}px; top:{{coord[1]+5-2*i}}px; position: absolute;'>
                      {% endfor %}
                 {% endif %}
             {% else %}
@@ -67,8 +69,6 @@
         {% endfor %}
     {% endfor %}
 </div>
-team : {{team}}
-can_play : if game.can_play(team)
 <input type="hidden" id="team_name" value="{{team.name}}">
 <input type="hidden" id="can_play" value="{{game.can_play(team)}}">
 <input type="hidden" id="can_attack" vale="{{False}}">

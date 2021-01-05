@@ -1,21 +1,11 @@
 // ! globals vars
-var selected = undefined;
 var dices_list1 = [];
 var dices_list2 = [];
 var result1 = [];
 var result2 = [];
 var id_give_result;
 
-function setsizefor(liste, size, delta){
-    for(var i=0; i<liste.length; i++){
-        liste[i].style.width = size+ 'px';
-        liste[i].style.height = size+ 'px';
-        posx = parseInt(liste[i].style.left);
-        posy = parseInt(liste[i].style.top);
-        liste[i].style.left = (posx + delta) + 'px';
-        liste[i].style.top = (posy + delta) + 'px';
-    }
-}
+
 function getNbDiceToLauch(player, nbSoldier){
     var ret;
     if(player==1){
@@ -52,10 +42,27 @@ function rollstep(dice_img, liste, result, i){
         dice_img.id=n;
     }
 }
+function get_back(){
+    document.location = "/board";
+}
 
+function isfinished(){
+    for(var i=0; i<dices_list1.length; i++){
+        if(dices_list1[i]>0)
+            return false;
+    }
+    for(var i=0; i<dices_list2.length; i++){
+        if(dices_list2[i]>0)
+            return false;
+    }
+    return true;
+}
 function give_result(){
-    console.log('give results');
+    if(!isfinished()){
+        return;
+    }
     clearInterval(id_give_result); 
+    console.log(result1);
     result1.sort();
     result2.sort();
     console.log(result1);
@@ -63,13 +70,17 @@ function give_result(){
     var nbkill1=0;
     var nbkill2=0;
     for(var i=0; i<result1.length && i<result2.length; i++){
-        if(result2[result2.length-i]>=result1[result1.length-i]){
+        console.log("i : " + i);
+        if(result2[result2.length-i-1]>=result1[result1.length-i-1]){
+            console.log("+1 kill for ya");
             nbkill1+=1;
         }
         else{
+            console.log("+1 kill for the adversary");
             nbkill2+=1;
         }
     }
+    console.log(nbkill1, nbkill2);
     var nb1 = parseInt(document.getElementById('nb1').value);
     var nb2 = parseInt(document.getElementById('nb2').value);
     document.getElementById('nb1').value = nb1 - nbkill1;
@@ -88,7 +99,20 @@ function give_result(){
     console.log(path);
     xmlhttp.open("GET", path);
     xmlhttp.send();
-    alert('Vous avez perdu ' + nbkill1 + ' unités et avez tué ' + nbkill2);
+    var nb1 = (nb1 - nbkill1);
+    var nb2 = (nb2 - nbkill2);
+    console.log('nb1 : ' + nb1);
+    console.log('nb2 : ' + nb2);
+
+    if(nb1==0){
+        parchement('Attaque terminée', 'Vous avez perdu tous vos soldats, réessayez une prochaine fois...', true, get_back);
+    }
+    else if(nb2==0){
+        parchement('Attaque terminée', 'Vous avez tué tous les soldatas de l\'adversaire, combien de soldats voulez-vous déployer sur ' + ter2 + ' ?', false);
+    }
+    else{
+        parchement('Attaque en cours','Vous avez perdu ' + nbkill1 + ' unités et avez tué ' + nbkill2);
+    }
 }
 function rolldices(dice_div, num){
     var value_liste;
@@ -140,29 +164,5 @@ function attack(){
     for (var i=0; i<nbdice2; i++){
         rolldices(dices2, 2);
     }
-    id_give_result = setInterval(give_result ,3300);
-}
-function select(countryName){
-    var playing_team = document.getElementById('team_name').value;
-    liste = document.getElementsByClassName(countryName);
-    if(selected==undefined){
-        selected = liste;
-        if(! isClass(liste[0],playing_team)){
-            alert('Ce ne sont pas vos pions !');
-            return;
-        }
-        for(var i=0; i<liste.length; i++){
-            setsizefor(liste, 30, 0);
-        }
-    }
-    else{
-        if(isClass(liste[0], playing_team)){
-            setsizefor(selected, 20, 5);
-            setsizefor(liste, 30, -5);
-            selected = liste;                
-        }
-        else{
-
-        }
-    }
+    id_give_result = setInterval(give_result ,1000);
 }

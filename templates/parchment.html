@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="/static/css/parchment.css">
+<script src="/static/js/parchment.js"></script>
+
+<div id="parchment" style="display: none;">
+    <img id="parchment-close" src="/static/img/close.webp" onclick="parchment_close()"/>
+    <h1 id="parchment-title">{% block parchment_title %}{% endblock %}</h1>
+    <p id="parchment-content">{% block parchment_content %}{% endblock %}</p>
+</div>

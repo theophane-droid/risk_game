@@ -1,3 +1,5 @@
+{% include "parchment.html" %}
+
 <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/attack.css')}}">
 <script type="text/javascript" src="{{url_for('static', filename='js/attack.js')}}"></script>
@@ -38,4 +40,5 @@
 </main>
 <center>
     <button class="btn btn-primary center" onclick="attack()">Attaquer !</button>
+    <button class="btn btn-danger center"><a class="link" href="/board">Se replier</a></button>
 </center>
