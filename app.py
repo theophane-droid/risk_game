@@ -9,9 +9,9 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
 
-@app.route('/', methods=['get','post'])
+@app.route('/', methods=['get', 'post'])
 def login():
-    if request.method=='GET':
+    if request.method == 'GET':
         try:
             team = request.cookies.get('team')
             team = get_team(team)
@@ -31,6 +31,7 @@ def login():
             flash('Mauvais nom/mot de passe')
             return render_template('login.html')
 
+
 @app.route('/board', methods=['GET'])
 def board():
     if not is_logged(request):
@@ -40,6 +41,7 @@ def board():
     team = get_team(team)
     return render_template('board.html', coords=generate_coordinate(game), team=team, game=game)
 
+
 @app.route('/get_coords', methods=['get'])
 def get_board_coords():
     if not is_logged(request):
@@ -47,12 +49,14 @@ def get_board_coords():
     game = Game(STATE_STORAGE)
     return json.dumps(generate_coordinate(game))
 
+
 @app.route('/validate_repart/<team_name>', methods=['post'])
 def validate_repart(team_name):
     values = request.get_json()
     game = Game(STATE_STORAGE)
     update_coordinate_by_team(game, values, team_name)
     return values
+
 
 @app.route('/compute/<ter1>/<team1>/<nb1>/<ter2>/<team2>/<nb2>')
 def compute(ter1, nb1, team1, ter2, nb2, team2):
@@ -72,6 +76,7 @@ def compute(ter1, nb1, team1, ter2, nb2, team2):
     game.store(STATE_STORAGE)
     return '', 200
 
+
 @app.route('/attack/<team1>/<team2>/<territory1>/<territory2>', methods=['get'])
 def attack(team1, team2, territory1, territory2):
     if not is_logged(request):
@@ -85,4 +90,4 @@ def attack(team1, team2, territory1, territory2):
 
 
 if __name__ == "__main__":
-    app.run(port=5002)
+    app.run(port=5000)

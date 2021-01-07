@@ -76,9 +76,14 @@ function selectCountry(class_name){
             }
         }
         else{
-            var team1 = playing_team;
-            var team2 = document.getElementsByClassName(class_name)[0].classList[1];
-            document.location="/attack/" + team1 + "/" + team2 + "/" + selectedCountry + "/" + class_name;
+            if(isNextTo(class_name, selectedCountry)){
+                var team1 = playing_team;
+                var team2 = document.getElementsByClassName(class_name)[0].classList[1];
+                document.location="/attack/" + team1 + "/" + team2 + "/" + selectedCountry + "/" + class_name;
+            }
+            else{
+                parchement('Erreur','Ces territoires ne sont pas voisins, vous ne pouvez pas attaquer');
+            }
         }
     }
     else{
