@@ -5,4 +5,3 @@ from core.Game import Game
 
 
 g = Game(STATE_STORAGE)
-print(generate_coordinate(g))

@@ -37,7 +37,7 @@
           {% if not logged %}
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Se connecter</button>
           {% else %}
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Se déconnecter</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0" onclick="document.cookie = 'team= ;SameSite=Lax'; document.location.replace('/')" type="submit">Se déconnecter</button>
           {% endif %}
         </div>
       </nav>

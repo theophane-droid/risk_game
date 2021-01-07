@@ -57,6 +57,23 @@ function isfinished(){
     }
     return true;
 }
+function validate_number(ter1, ter2, team){
+    //function aimed to validate the number of soldats envoyes sur un territoire conquis
+    var select = document.getElementById('select_choose_number');
+    var number = parseInt(select.options[select.selectedIndex].innerHTML);
+    console.log('number + ' + number);
+    var baseNb = parseInt(document.getElementById('nb1').value);
+    var path = '/compute/' + ter1 + '/' + team + '/' + (baseNb-number+1) +
+     '/' + ter2 + '/' + team + '/' + (number);
+    console.log(path);
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    xmlhttp.onreadystatechange = function(){
+        document.location = "/board";
+    };
+    xmlhttp.open("GET", path);
+    xmlhttp.send();
+    return false;
+}
 function give_result(){
     if(!isfinished()){
         return;
@@ -83,6 +100,8 @@ function give_result(){
     console.log(nbkill1, nbkill2);
     var nb1 = parseInt(document.getElementById('nb1').value);
     var nb2 = parseInt(document.getElementById('nb2').value);
+    console.log("nb1 : " +nb1);
+    console.log("nb2 : " +nb2);
     document.getElementById('nb1').value = nb1 - nbkill1;
     document.getElementById('nb2').value = nb2 - nbkill2;
     document.getElementById('w_nb1').innerHTML = nb1 - nbkill1;
@@ -108,7 +127,12 @@ function give_result(){
         parchement('Attaque terminée', 'Vous avez perdu tous vos soldats, réessayez une prochaine fois...', true, get_back);
     }
     else if(nb2==0){
-        parchement('Attaque terminée', 'Vous avez tué tous les soldatas de l\'adversaire, combien de soldats voulez-vous déployer sur ' + ter2 + ' ?', false);
+        var str = "<form onsubmit=\"return validate_number('" + ter1 + "','" + ter2 +"','" + team1 +"')\"><select id=select_choose_number>";
+        for(var i=0; i<nb1; i++)
+            str+= "<option>" + (i+1);
+        str += "<form>"
+        str += "<br><input type='submit' value='Valider'></form>";
+        parchement('Attaque terminée', 'Vous avez tué tous les soldats de l\'adversaire, combien de soldats voulez-vous déployer sur ' + ter2 + ' ?' + str, false);
     }
     else{
         parchement('Attaque en cours','Vous avez perdu ' + nbkill1 + ' unités et avez tué ' + nbkill2);

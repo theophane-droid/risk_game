@@ -24,7 +24,7 @@ def login():
             name, password = values['name'], values['pass']
             team = check_login(name, password)
             response = make_response(render_template('game.html', game=Game(STATE_STORAGE), team=team, logged=True))
-            response.set_cookie('team',encrypt(team.name))
+            response.set_cookie('team',encrypt(team.name), samesite='Lax')
             return response
         except Exception as e:
             raise e
@@ -60,8 +60,12 @@ def validate_repart(team_name):
 
 @app.route('/compute/<ter1>/<team1>/<nb1>/<ter2>/<team2>/<nb2>')
 def compute(ter1, nb1, team1, ter2, nb2, team2):
+    ter1 = ter1.replace('%20',' ')
+    ter2 = ter2.replace('%20',' ')
     if not is_logged(request):
+        print('redirect')
         return redirect('/')
+    print('computing')
     game = Game(STATE_STORAGE)
     countries = list_to_dict(game.countries)
     c1, c2 = countries[ter1], countries[ter2]
@@ -71,8 +75,6 @@ def compute(ter1, nb1, team1, ter2, nb2, team2):
     c2.occuped_by = t2.id
     c1.nb = int(nb1)
     c2.nb = int(nb2)
-    print('c1', c1)
-    print('c2', c2)
     game.store(STATE_STORAGE)
     return '', 200
 

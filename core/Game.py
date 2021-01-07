@@ -31,6 +31,8 @@ class Game(JSONEncoder):
             self.update()
             
         else:
+            for t in self.teams:
+                t.repartition_made = False
             self.day = 1
             self.countries = generate_all_contries()
             self.create_new()
@@ -60,6 +62,7 @@ class Game(JSONEncoder):
             self.current_frame = self.end_frame
             end = datetime.fromtimestamp(self.end_frame) + timedelta(hours=MAX_PLAY_TIME)
             self.end_frame = end.timestamp()
+            self.teams[num_player].repartition_made = False
             self.num_player+=1
             while self.num_player>=len(self.teams):
                 self.day+=1
@@ -92,10 +95,6 @@ class Game(JSONEncoder):
         return i
 
     def can_play(self, team):
-        print('team : "' + team.name + '"')
-        print(self.order)
-        print(self.num_player)
-        print(team.name == self.order[self.num_player])
         return team.name == self.order[self.num_player]
 
     def get_remaining_time(self, team):
